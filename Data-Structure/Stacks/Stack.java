@@ -4,11 +4,11 @@ package prub;
  *
  * @author hardel
  */
-public class Pila {
+public class Stack {
     private int tope = -1;
     private final int[] vec;
 
-    public Pila(int max) {
+    public Stack(int max) {
         vec = new int[max];
     }
     
