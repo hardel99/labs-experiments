@@ -1,4 +1,4 @@
-#include "colas.h"
+#include "queue.h"
 #include <stdio.h>
 #include <conio.h>
 #include <stdlib.h>
