@@ -1,6 +1,4 @@
 /*Simplex algorithm original provided by mike168m on github*/
-package dataStructures;
-
 /**
  *
  * @author hardel
