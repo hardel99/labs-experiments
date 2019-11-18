@@ -62,18 +62,50 @@ int main() {
 	printf("Altura de arbol %d\n", AlturaArbol(ArbolInt, &altura));
 	
 	/* Mostrar el árbol en tres ordenes distintos: */
-	printf("InOrden: "); InOrden(ArbolInt, Mostrar); printf("\n");
-	printf("PreOrden: "); PreOrden(ArbolInt, Mostrar); printf("\n");
-	printf("PostOrden: "); PostOrden(ArbolInt, Mostrar); printf("\n");
+	printf("InOrden: "); 
+	InOrden(ArbolInt, Mostrar); 
+	printf("\n");
+	
+	printf("PreOrden: "); 
+	PreOrden(ArbolInt, Mostrar); 
+	printf("\n");
+	
+	printf("PostOrden: "); 
+	PostOrden(ArbolInt, Mostrar); 
+	printf("\n");
 	
 	/* Borraremos algunos elementos: */
 	printf("N nodos: %d\n", NumeroNodos(ArbolInt, &nnodos));
-	Borrar(&ArbolInt, 5); printf("Borrar 5: "); InOrden(ArbolInt, Mostrar); printf("\n");
-	Borrar(&ArbolInt, 8); printf("Borrar 8: "); InOrden(ArbolInt, Mostrar); printf("\n");
-	Borrar(&ArbolInt, 15); printf("Borrar 15: "); InOrden(ArbolInt, Mostrar); printf("\n");
-	Borrar(&ArbolInt, 245); printf("Borrar 245: "); InOrden(ArbolInt, Mostrar); printf("\n");
-	Borrar(&ArbolInt, 4); printf("Borrar 4: "); InOrden(ArbolInt, Mostrar); printf("\n");
-	Borrar(&ArbolInt, 17); printf("Borrar 17: "); InOrden(ArbolInt, Mostrar); printf("\n");
+	Borrar(&ArbolInt, 5); 
+	printf("Borrar 5: "); 
+	InOrden(ArbolInt, Mostrar); 
+	printf("\n");
+	
+	Borrar(&ArbolInt, 8); 
+	printf("Borrar 8: "); 
+	InOrden(ArbolInt, Mostrar); 
+	printf("\n");
+	
+	Borrar(&ArbolInt, 15); 
+	printf("Borrar 15: "); 
+	InOrden(ArbolInt, Mostrar); 
+	printf("\n");
+	
+	Borrar(&ArbolInt, 245); 
+	printf("Borrar 245: "); 
+	InOrden(ArbolInt, Mostrar); 
+	printf("\n");
+	
+	Borrar(&ArbolInt, 4); 
+	printf("Borrar 4: "); 
+	InOrden(ArbolInt, Mostrar); 
+	printf("\n");
+	
+	Borrar(&ArbolInt, 17); 
+	printf("Borrar 17: "); 
+	InOrden(ArbolInt, Mostrar); 
+	printf("\n");
+	
 	printf("N nodos: %d\n", NumeroNodos(ArbolInt, &nnodos));
 	
 	/*Alturas*/
@@ -105,27 +137,33 @@ void Insertar(Arbol *a, int dat) {
 	/* Buscar el dato en el árbol, manteniendo un puntero al nodo padre */
 	while(!Vacio(actual) && dat != actual->dato) {
 		padre = actual;
-		if(dat < actual->dato) 
+		if(dat < actual->dato) {
 			actual = actual->izquierdo;
-		else if(dat > actual->dato) 
+		} else if(dat > actual->dato) {
 			actual = actual->derecho;
+		}
 	}
 	
 	/* Si se ha encontrado el elemento, regresar sin insertar */
-	if(!Vacio(actual)) return;
+	if(!Vacio(actual)){
+		return;
+	}
 	
 	/* Si padre es NULL, entonces el árbol estaba vacío, el nuevo nodo será el nodo raiz */
 	if(Vacio(padre)) {
 		*a = (Arbol)malloc(sizeof(tipoNodo));
+		
 		(*a)->dato = dat;
 		(*a)->izquierdo = (*a)->derecho = NULL;
 	}else if(dat < padre->dato) {	/* Si el dato es menor que el que contiene el nodo padre, lo insertamos en la rama izquierda */
 		actual = (Arbol)malloc(sizeof(tipoNodo));
+		
 		padre->izquierdo = actual;
 		actual->dato = dat;
 		actual->izquierdo = actual->derecho = NULL;
 	}else if(dat > padre->dato) {	/* Si el dato es mayor que el que contiene el nodo padre, lo insertamos en la rama derecha */
 		actual = (Arbol)malloc(sizeof(tipoNodo));
+		
 		padre->derecho = actual;
 		actual->dato = dat;
 		actual->izquierdo = actual->derecho = NULL;
@@ -143,12 +181,13 @@ void Borrar(Arbol *a, int dat) {
 	while(!Vacio(actual)) {
 		if(dat == actual->dato) { /* Si el valor está en el nodo actual */
 			if(EsHoja(actual)) { /* Y si además es un nodo hoja: lo borramos */
-				if(padre) /* Si tiene padre (no es el nodo raiz) */
-					/* Anulamos el puntero que le hace referencia */
-					if(padre->derecho == actual) 
+				if(padre) {		/* Si tiene padre (no es el nodo raiz) Anulamos el puntero que le hace referencia */
+					if(padre->derecho == actual) {
 						padre->derecho = NULL;
-					else if(padre->izquierdo == actual) 
+					} else if(padre->izquierdo == actual) {
 						padre->izquierdo = NULL;
+					}
+				}
 						
 				free(actual);
 				actual = NULL;
@@ -156,14 +195,15 @@ void Borrar(Arbol *a, int dat) {
 				return;
 			}else { /* Si el valor está en el nodo actual, pero no es hoja */
 				padre = actual;
-				/* Buscar nodo más izquierdo de rama derecha */
-				if(actual->derecho) {
+				
+				if(actual->derecho) {	/* Buscar nodo más izquierdo de rama derecha */
 					nodo = actual->derecho;
+					
 					while(nodo->izquierdo) {
 						padre = nodo;
 						nodo = nodo->izquierdo;
 					}
-				} else{	/* O buscar nodo más derecho de rama izquierda */
+				} else{					/* O buscar nodo más derecho de rama izquierda */
 					nodo = actual->izquierdo;
 					while(nodo->derecho) {
 						padre = nodo;
@@ -182,39 +222,47 @@ void Borrar(Arbol *a, int dat) {
 		} else{ /* Todavía no hemos encontrado el valor, seguir buscándolo */
 			padre = actual;
 			
-			if(dat > actual->dato) 
+			if(dat > actual->dato) {
 				actual = actual->derecho;
-			else if(dat < actual->dato) 
+			} else if(dat < actual->dato) {
 				actual = actual->izquierdo;
+			}
 		}
 	}
 }
 
 void InOrden(Arbol a, void (*func)(int*)) {
-	if(a->izquierdo) 
+	if(a->izquierdo) {
 		InOrden(a->izquierdo, func);
+	}
 	
 	func(&(a->dato));
 	
-	if(a->derecho) 
+	if(a->derecho) {
 		InOrden(a->derecho, func);
+	}
 }
 
 void PreOrden(Arbol a, void  (*func)(int*)) {
 	func(&a->dato);
 	
-	if(a->izquierdo) 
+	if(a->izquierdo) {
 		PreOrden(a->izquierdo, func);
+	}
 	
-	if(a->derecho) 
+	if(a->derecho) {
 		PreOrden(a->derecho, func);
+	}
 }
 
 void PostOrden(Arbol a, void (*func)(int*)) {
-	if(a->izquierdo) 
+	if(a->izquierdo) {
 		PostOrden(a->izquierdo, func);
-	if(a->derecho) 
+	}
+	
+	if(a->derecho) {
 		PostOrden(a->derecho, func);
+	}
 	
 	func(&a->dato);
 }
@@ -244,8 +292,11 @@ int Altura(Arbol a, int dat) {
 			return altura; /* encontrado: devolver altura */
 		} else{
 			altura++; /* Incrementamos la altura, seguimos buscando */
-			if(dat < actual->dato) actual = actual->izquierdo;
-			else if(dat > actual->dato) actual = actual->derecho;
+			if(dat < actual->dato) {
+				actual = actual->izquierdo;
+			} else if(dat > actual->dato) {
+				actual = actual->derecho;
+			}
 		}
 	}
 	
@@ -262,10 +313,13 @@ void auxContador(Arbol nodo, int *c) {
 	(*c)++; /* Otro nodo */
 	
 	/* Continuar recorrido */
-	if(nodo->izquierdo) 
+	if(nodo->izquierdo) {
 		auxContador(nodo->izquierdo, c);
-	if(nodo->derecho) 
+	}
+	
+	if(nodo->derecho) {
 		auxContador(nodo->derecho, c);
+	}
 }
 
 int AlturaArbol(Arbol a, int *altura) {
@@ -276,15 +330,18 @@ int AlturaArbol(Arbol a, int *altura) {
 
 void auxAltura(pNodo nodo, int a, int *altura) {
 	/* Recorrido postorden */
-	if(nodo->izquierdo) 
+	if(nodo->izquierdo) {
 		auxAltura(nodo->izquierdo, a+1, altura);
-	if(nodo->derecho) 
-		auxAltura(nodo->derecho, a+1, altura);
+	}
 	
-	/* Proceso, si es un nodo hoja, y su altura es mayor que la actual del
-	árbol, actualizamos la altura actual del árbol */
-	if(EsHoja(nodo) && a > *altura) 
+	if(nodo->derecho) {
+		auxAltura(nodo->derecho, a+1, altura);
+	}
+	
+	/* Proceso, si es un nodo hoja, y su altura es mayor que la actual del árbol, actualizamos la altura actual del árbol */
+	if(EsHoja(nodo) && a > *altura) {
 		*altura = a;
+	}
 }
 
 int Vacio(Arbol r) {
@@ -292,7 +349,7 @@ int Vacio(Arbol r) {
 }
 
 int EsHoja(pNodo r) {
-	return !r->derecho && !r->izquierdo;
+	return (!r->derecho && !r->izquierdo);
 }
 
 void Mostrar(int *d) {
